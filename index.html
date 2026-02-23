@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>한문과 성취기준 및 성취수준 생성기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>🏫 한문과 성취기준 및 성취수준 생성기</h2>
+        
+        <div class="filter-box">
+            <div class="filter-group">
+                <label>교육과정:</label>
+                <select id="curriculum-select">
+                    <option value="2022">2022 개정</option>
+                    <option value="2015">2015 개정</option>
+                </select>
+                
+                <label>학교급:</label>
+                <select id="school-select">
+                    <option value="중학교">중학교</option>
+                    <option value="고등학교">고등학교</option>
+                </select>
+                
+                <label>과목:</label>
+                <select id="subject-select">
+                    </select>
+                
+                <button id="search-btn" class="small-btn">조회</button>
+            </div>
+        </div>
+
+        <div class="list-header" id="list-header" style="display: none;">
+            <label><input type="checkbox" id="select-all"> <strong>전체 선택 / 해제</strong></label>
+        </div>
+
+        <div class="list-box" id="standards-list">
+            <p style="color: #888; text-align: center; margin-top: 80px;">조건을 선택하고 조회 버튼을 눌러주세요.</p>
+        </div>
+
+        <button id="generate-btn" class="main-btn">결과 생성하기</button>
+
+        <div class="section-header">
+            <div class="section-title">성취기준별 성취수준</div>
+            <button class="copy-btn" onclick="copyTable()">📋 표 복사</button>
+        </div>
+        <p class="desc">* 선택한 성취기준의 성취수준 내용입니다. (한글/워드에 표 형태 그대로 복사됩니다)</p>
+        <table class="result-table" id="result-table">
+            <thead>
+                <tr>
+                    <th width="30%">성취기준</th>
+                    <th width="10%">등급</th>
+                    <th width="60%">세부 내용</th>
+                </tr>
+            </thead>
+            <tbody id="result-tbody">
+                <tr><td colspan="3" style="text-align: center; color: #888; padding: 30px 0;">성취기준을 선택하고 버튼을 누르면 상세 표가 표시됩니다.</td></tr>
+            </tbody>
+        </table>
+
+        <div class="section-header">
+            <div class="section-title">학기 단위 성취수준</div>
+            <button class="copy-btn" onclick="copyTextareas()">📋 전체 복사</button>
+        </div>
+        <p class="desc">* 각 성취수준별 문장을 묶은 내용입니다. (진로선택 과목은 A~C만 표시될 수 있습니다)</p>
+        <div id="grade-textareas">
+            <div class="grade-block"><div class="grade-label">■ A 등급</div><textarea id="text-A"></textarea></div>
+            <div class="grade-block"><div class="grade-label">■ B 등급</div><textarea id="text-B"></textarea></div>
+            <div class="grade-block"><div class="grade-label">■ C 등급</div><textarea id="text-C"></textarea></div>
+            <div class="grade-block"><div class="grade-label">■ D 등급</div><textarea id="text-D"></textarea></div>
+            <div class="grade-block"><div class="grade-label">■ E 등급</div><textarea id="text-E"></textarea></div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-title">영역별 성취수준</div>
+            <button class="copy-btn" onclick="copyTable('domain-table')">📋 표 복사</button>
+        </div>
+        <p class="desc">* 2022 개정의 경우 지식·이해, 과정·기능, 가치·태도로 세분화되어 표시됩니다.</p>
+        <table class="result-table" id="domain-table">
+            <thead>
+                <tr>
+                    <th width="15%">영역</th>
+                    <th width="10%">등급</th>
+                    <th width="15%">평가 요소</th>
+                    <th width="60%">세부 내용</th>
+                </tr>
+            </thead>
+            <tbody id="domain-tbody">
+                <tr><td colspan="4" style="text-align: center; color: #888; padding: 30px 0;">결과 생성 시 영역별 데이터가 표시됩니다.</td></tr>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <p>✅ 본 사이트는 교수학습 및 평가 운영 계획 작성의 보조 자료로만 활용해 주시고, 
+                <a href="https://stas.moe.go.kr/" target="_blank">학생평가지원포털</a>이나 
+                <a href="https://www.edunet.net/" target="_blank">에듀넷</a> 등을 통해 최종 내용 확인 부탁드립니다.
+            </p>
+            <div style="text-align: right;">
+                <div class="footer-contact" style="text-align: right;">
+                    💬 문의 및 피드백<br>
+                    빛고을온학교 윤세훈 | Email: kkalssak@gmail.com
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

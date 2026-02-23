@@ -1,0 +1,48 @@
+body { font-family: 'Malgun Gothic', sans-serif; background-color: #f4f6f8; color: #333; padding: 20px; line-height: 1.6; }
+.container { max-width: 1000px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+h2 { border-bottom: 3px solid #2c4c7c; padding-bottom: 10px; color: #1a2639; margin-top: 0; display: flex; align-items: center; }
+
+/* 필터 영역 */
+.filter-box { background: #f0f4f8; padding: 20px; border-radius: 8px; margin-bottom: 25px; display: flex; justify-content: center; align-items: center; gap: 15px; border: 1px solid #dce5ef; }
+.filter-group select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; min-width: 120px; }
+
+/* 버튼 색상 (파란색 테마) */
+.small-btn { background: #3a6096; color: white; border: none; padding: 9px 25px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+.small-btn:hover { background: #23426b; }
+.main-btn { width: 100%; background: #2c4c7c; color: #fff; font-size: 18px; font-weight: bold; border: none; padding: 18px; border-radius: 8px; cursor: pointer; margin-bottom: 40px; transition: 0.3s; }
+.main-btn:hover { background: #1e365c; transform: translateY(-2px); }
+
+/* 리스트 영역 */
+.list-header { padding: 10px 15px; background: #eef2f6; border-radius: 4px; margin-bottom: 10px; font-size: 14px; border: 1px solid #dce5ef; }
+.list-header label { cursor: pointer; }
+.list-box { border: 1px solid #e0e0e0; padding: 20px; height: 250px; overflow-y: auto; margin-bottom: 25px; border-radius: 6px; background: #fff; }
+.check-item { margin-bottom: 12px; font-size: 14px; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; display: flex; align-items: flex-start; }
+.check-item:last-child { border-bottom: none; }
+.check-item label { cursor: pointer; margin-left: 10px; line-height: 1.5; font-weight: 500; }
+
+/* 섹션 타이틀 및 텍스트 */
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-top: 50px; margin-bottom: 5px; border-left: 5px solid #2c4c7c; padding-left: 12px; }
+.section-title { font-size: 20px; font-weight: bold; color: #20334a; margin-bottom: 0; padding-left: 0; border-left: none; }
+.desc { font-size: 13px; color: #666; margin-bottom: 15px; padding-left: 18px; }
+
+/* 복사 버튼 */
+.copy-btn { background: #f0f4f8; color: #444; border: 1px solid #ccc; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; transition: background 0.2s; }
+.copy-btn:hover { background: #e0e8f0; }
+
+/* 결과 표 */
+.result-table { width: 100%; border-collapse: collapse; margin-bottom: 40px; table-layout: fixed; }
+.result-table th, .result-table td { border: 1px solid #ddd; padding: 12px; text-align: left; font-size: 13.5px; word-break: keep-all; }
+.result-table th { background: #f4f6f9; text-align: center; color: #444; font-weight: bold; }
+
+/* 등급 텍스트 박스 */
+.grade-block { margin-bottom: 20px; }
+.grade-label { font-size: 15px; font-weight: bold; color: #1a2639; margin-bottom: 8px; display: flex; justify-content: space-between; }
+textarea { width: 100%; height: 80px; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 14px; line-height: 1.6; resize: vertical; background-color: #fdfdfd; color: #444; }
+
+.domain-box { border: 1px solid #ddd; border-radius: 4px; padding: 15px; background-color: #fafafa; min-height: 60px; margin-bottom: 30px; font-size: 13.5px; line-height: 1.6; }
+
+/* 푸터 디자인 */
+.footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid #eaeaea; font-size: 13px; color: #666; line-height: 1.6; }
+.footer a { color: #3a6096; text-decoration: none; font-weight: bold; }
+.footer a:hover { text-decoration: underline; }
+.footer-contact { margin-top: 15px; padding: 12px; background: #f9f9f9; border-radius: 6px; display: inline-block; color: #555; text-align: left; }
