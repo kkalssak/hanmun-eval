@@ -92,18 +92,42 @@ document.getElementById('generate-btn').addEventListener('click', () => {
     domainBody.innerHTML = '';
     let combinedText = { A: "", B: "", C: "", D: "", E: "" };
 
+    // ★ 한문Ⅱ 등 3단계 과목인지 체크
+    const is3Level = (currentSubjectData.curriculum === "2015" && currentSubjectData.subject === "한문Ⅱ");
+
+    // UI 텍스트 박스 D, E 등급 숨기기/보이기 처리
+    document.getElementById('text-D').parentElement.style.display = is3Level ? 'none' : 'block';
+    document.getElementById('text-E').parentElement.style.display = is3Level ? 'none' : 'block';
+
     // --- (1) 성취기준 표 및 텍스트 ---
     selectedItems.forEach(item => {
         let tableRows = [];
-        if (item.curriculum === "2015") {
+        
+        if (is3Level) {
+            // 한문2: A, B, C 3단계 출력 (데이터는 기존 A, C, E에서 끌어옴)
+            tableRows = [
+                { label: 'A', text: item.levels.A },
+                { label: 'B', text: item.levels.C },
+                { label: 'C', text: item.levels.E }
+            ];
+            if (item.levels.A) combinedText.A += item.levels.A + " ";
+            if (item.levels.C) combinedText.B += item.levels.C + " ";
+            if (item.levels.E) combinedText.C += item.levels.E + " ";
+        } else if (item.curriculum === "2015") {
+            // 2015개정 한문1 등은 상, 중, 하 출력
             tableRows = [
                 { label: '상', text: item.levels.A },
                 { label: '중', text: item.levels.C },
                 { label: '하', text: item.levels.E }
             ];
+            ['A', 'B', 'C', 'D', 'E'].forEach(g => {
+                if (item.levels[g]) combinedText[g] += item.levels[g] + " ";
+            });
         } else {
+            // 2022개정은 A~E 전체 출력
             ['A', 'B', 'C', 'D', 'E'].forEach(g => {
                 if (item.levels[g]) tableRows.push({ label: g, text: item.levels[g] });
+                if (item.levels[g]) combinedText[g] += item.levels[g] + " ";
             });
         }
 
@@ -117,10 +141,6 @@ document.getElementById('generate-btn').addEventListener('click', () => {
             }
             tbody.appendChild(tr);
         });
-
-        ['A', 'B', 'C', 'D', 'E'].forEach(g => {
-            if (item.levels[g]) combinedText[g] += item.levels[g] + " ";
-        });
     });
 
     ['A', 'B', 'C', 'D', 'E'].forEach(g => {
@@ -132,15 +152,22 @@ document.getElementById('generate-btn').addEventListener('click', () => {
         currentSubjectData.domains.forEach(domain => {
             let tableRows = [];
             
-            ['A', 'B', 'C', 'D', 'E'].forEach(g => {
-                const lvl = domain.levels[g];
+            // 3단계 과목이면 영역별 성취수준도 A->A, C->B, E->C로 매핑
+            let gradesToMap = is3Level 
+                ? [{ label: 'A', key: 'A' }, { label: 'B', key: 'C' }, { label: 'C', key: 'E' }]
+                : [{ label: 'A', key: 'A' }, { label: 'B', key: 'B' }, { label: 'C', key: 'C' }, { label: 'D', key: 'D' }, { label: 'E', key: 'E' }];
+            
+            gradesToMap.forEach(mapObj => {
+                const gradeLabel = mapObj.label;
+                const lvl = domain.levels[mapObj.key];
+                
                 if (lvl) {
                     if (typeof lvl === 'object') {
-                        tableRows.push({ grade: g, type: '지식·이해', text: lvl.knowledge, rowspan: 3, isFirst: true });
-                        tableRows.push({ grade: g, type: '과정·기능', text: lvl.process, rowspan: 0, isFirst: false });
-                        tableRows.push({ grade: g, type: '가치·태도', text: lvl.attitude, rowspan: 0, isFirst: false });
+                        tableRows.push({ grade: gradeLabel, type: '지식·이해', text: lvl.knowledge, rowspan: 3, isFirst: true });
+                        tableRows.push({ grade: gradeLabel, type: '과정·기능', text: lvl.process, rowspan: 0, isFirst: false });
+                        tableRows.push({ grade: gradeLabel, type: '가치·태도', text: lvl.attitude, rowspan: 0, isFirst: false });
                     } else {
-                        tableRows.push({ grade: g, type: '-', text: lvl, rowspan: 1, isFirst: true });
+                        tableRows.push({ grade: gradeLabel, type: '-', text: lvl, rowspan: 1, isFirst: true });
                     }
                 }
             });
@@ -174,7 +201,6 @@ document.getElementById('generate-btn').addEventListener('click', () => {
 });
 
 // --- 5. 복사 기능들 ---
-
 window.copyTable = function(tableId) {
     const table = document.getElementById(tableId);
     let range, sel;
@@ -192,7 +218,12 @@ window.copyTable = function(tableId) {
 
 window.copyTextareas = function() {
     let combined = "";
-    ['A', 'B', 'C', 'D', 'E'].forEach(grade => {
+    
+    // 3단계 과목이면 A, B, C만 복사 (D, E 제외)
+    const is3Level = (currentSubjectData && currentSubjectData.curriculum === "2015" && currentSubjectData.subject === "한문Ⅱ");
+    const gradesToCopy = is3Level ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D', 'E'];
+
+    gradesToCopy.forEach(grade => {
         const text = document.getElementById(`text-${grade}`).value;
         if (text) combined += `[${grade} 등급]\n${text}\n\n`;
     });
