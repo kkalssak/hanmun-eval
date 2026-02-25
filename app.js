@@ -103,26 +103,24 @@ document.getElementById('generate-btn').addEventListener('click', () => {
     selectedItems.forEach(item => {
         let tableRows = [];
         
-        if (is3Level) {
-            // 한문2: A, B, C 3단계 출력 (데이터는 기존 A, C, E에서 끌어옴)
-            tableRows = [
-                { label: 'A', text: item.levels.A },
-                { label: 'B', text: item.levels.C },
-                { label: 'C', text: item.levels.E }
-            ];
-            if (item.levels.A) combinedText.A += item.levels.A + " ";
-            if (item.levels.C) combinedText.B += item.levels.C + " ";
-            if (item.levels.E) combinedText.C += item.levels.E + " ";
-        } else if (item.curriculum === "2015") {
-            // 2015개정 한문1 등은 상, 중, 하 출력
+        if (item.curriculum === "2015") {
+            // 2015개정은 한문2 여부와 상관없이 무조건 첫 표는 '상, 중, 하'로 표시!
             tableRows = [
                 { label: '상', text: item.levels.A },
                 { label: '중', text: item.levels.C },
                 { label: '하', text: item.levels.E }
             ];
-            ['A', 'B', 'C', 'D', 'E'].forEach(g => {
-                if (item.levels[g]) combinedText[g] += item.levels[g] + " ";
-            });
+            
+            // 하지만 아래로 내려가는 텍스트박스 조립은 한문2(3단계)인 경우 A, B, C에 맞게 조립!
+            if (is3Level) {
+                if (item.levels.A) combinedText.A += item.levels.A + " ";
+                if (item.levels.C) combinedText.B += item.levels.C + " "; // '중' 내용을 B에 쏙
+                if (item.levels.E) combinedText.C += item.levels.E + " "; // '하' 내용을 C에 쏙
+            } else {
+                ['A', 'B', 'C', 'D', 'E'].forEach(g => {
+                    if (item.levels[g]) combinedText[g] += item.levels[g] + " ";
+                });
+            }
         } else {
             // 2022개정은 A~E 전체 출력
             ['A', 'B', 'C', 'D', 'E'].forEach(g => {
@@ -152,7 +150,7 @@ document.getElementById('generate-btn').addEventListener('click', () => {
         currentSubjectData.domains.forEach(domain => {
             let tableRows = [];
             
-            // 3단계 과목이면 영역별 성취수준도 A->A, C->B, E->C로 매핑
+            // 3단계 과목이면 영역별 성취수준은 A, B, C로 매핑
             let gradesToMap = is3Level 
                 ? [{ label: 'A', key: 'A' }, { label: 'B', key: 'C' }, { label: 'C', key: 'E' }]
                 : [{ label: 'A', key: 'A' }, { label: 'B', key: 'B' }, { label: 'C', key: 'C' }, { label: 'D', key: 'D' }, { label: 'E', key: 'E' }];
